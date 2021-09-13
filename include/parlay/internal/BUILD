@@ -35,6 +35,7 @@ cc_library(
   name = "bucket_sort",
   hdrs = ["bucket_sort.h"],
   deps = [
+    ":merge_sort",
     "//parlay:utilities",
   ],
 )
@@ -43,7 +44,14 @@ cc_library(
   name = "collect_reduce",
   hdrs = ["collect_reduce.h"],
   deps = [
+    ":counting_sort",
+    ":sequence_ops",
+    ":integer_sort",
+    ":uninitialized_sequence",
     ":get_time",
+    "//parlay:parallel",
+    "//parlay:sequence",
+    "//parlay:slice",
     "//parlay:utilities",
   ],
 )
@@ -217,6 +225,7 @@ cc_library(
   hdrs = ["uninitialized_sequence.h"],
   deps = [
     ":debug_uninitialized",
+    "//parlay:alloc",
   ],
 )
 

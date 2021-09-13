@@ -1,6 +1,7 @@
  
 #ifndef PARLAY_INTERNAL_WINDOWS_FILE_MAP_IMPL_WINDOWS_H_
 #define PARLAY_INTERNAL_WINDOWS_FILE_MAP_IMPL_WINDOWS_H_
+#if defined(PARLAY_WINDOWS_FILE_MAP) && !defined(PARLAY_USE_FALLBACK_FILE_MAP)
 
 #include <cassert>
 #include <cstdio>
@@ -126,5 +127,6 @@ struct file_map {
 
 }  // namespace parlay
 
+#endif
 #endif  // PARLAY_INTERNAL_WINDOWS_FILE_MAP_IMPL_WINDOWS_H_
  

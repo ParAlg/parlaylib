@@ -72,7 +72,8 @@ struct Deque {
     deq[local_bot].job.store(job, std::memory_order_relaxed);  // shared store
     local_bot += 1;
     if (local_bot == q_size) {
-      throw std::runtime_error("internal error: scheduler queue overflow");
+      std::cerr << "internal error: scheduler queue overflow" << std::endl;
+      std::abort();
     }
     bot.store(local_bot, std::memory_order_relaxed);  // shared store
     std::atomic_thread_fence(std::memory_order_seq_cst);
