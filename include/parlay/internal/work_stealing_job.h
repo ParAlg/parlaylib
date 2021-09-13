@@ -15,7 +15,7 @@ struct WorkStealingJob {
   WorkStealingJob() {
     done.store(false, std::memory_order_relaxed);
   }
-  ~WorkStealingJob() = default;
+  virtual ~WorkStealingJob() = default;
   void operator()() {
     assert(done.load(std::memory_order_relaxed) == false);
     execute();
@@ -39,7 +39,7 @@ struct JobImpl : WorkStealingJob {
 };
 
 template<typename F>
-JobImpl<F> make_job(F& f) { return JobImpl(f); }
+JobImpl<F> make_job(F& f) { return JobImpl<F>(f); }
 
 }
 

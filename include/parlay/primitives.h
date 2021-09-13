@@ -882,6 +882,7 @@ auto append (const R1& s1, const R2& s2) {
 
 }  // namespace parlay
 
-#include "internal/group_by.h"            // IWYU pragma: export
+// TODO: include both primitives / group_by in the same build target if needed
+// #include "internal/group_by.h"            // IWYU pragma: export
 
 #endif  // PARLAY_PRIMITIVES_H_

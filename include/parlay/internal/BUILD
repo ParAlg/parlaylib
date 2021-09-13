@@ -36,6 +36,8 @@ cc_library(
   hdrs = ["bucket_sort.h"],
   deps = [
     ":merge_sort",
+    ":quicksort",
+    ":sequence_ops",
     "//parlay:utilities",
   ],
 )
@@ -71,6 +73,7 @@ cc_library(
     ":get_time",
     ":sequence_ops",
     ":transpose",
+    ":uninitialized_sequence",
     "//parlay:utilities",
   ],
 )
@@ -103,7 +106,7 @@ cc_library(
     ":collect_reduce",
     ":counting_sort",
     "//parlay:monoid",
-    "//parlay:parallel",
+    "//parlay:primitives",
     "//parlay:range",
     "//parlay:sequence",
     "//parlay:slice",
@@ -141,6 +144,7 @@ cc_library(
   name = "merge",
   hdrs = ["merge.h"],
   deps = [
+    ":binary_search",
     "//parlay:sequence",
     "//parlay:utilities",
   ],
@@ -152,6 +156,7 @@ cc_library(
   deps = [
     ":merge",
     ":quicksort",
+    ":uninitialized_sequence",
     "//parlay:sequence",
     "//parlay:utilities",
   ],
@@ -161,6 +166,7 @@ cc_library(
   name = "quicksort",
   hdrs = ["quicksort.h"],
   deps = [
+    ":counting_sort",
     ":uninitialized_storage",
     ":uninitialized_sequence",
     ":sequence_ops",
@@ -216,6 +222,8 @@ cc_library(
   name = "transpose",
   hdrs = ["transpose.h"],
   deps = [
+    "//parlay:monoid",
+    "//parlay:sequence",
     "//parlay:utilities",
   ],
 )

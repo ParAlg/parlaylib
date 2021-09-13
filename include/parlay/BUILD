@@ -4,6 +4,8 @@ cc_library(
   name = "alloc",
   hdrs = ["alloc.h"],
   deps = [
+  ":parallel",
+  ":utilities",
   "//parlay/internal:concurrent_stack",
   "//parlay/internal:memory_size",
   "//parlay/internal:block_allocator"
@@ -69,7 +71,6 @@ cc_library(
     ":utilities",
     "//parlay/internal:block_delayed",
     "//parlay/internal:collect_reduce",
-    "//parlay/internal:group_by",
     "//parlay/internal:integer_sort",
     "//parlay/internal:merge",
     "//parlay/internal:merge_sort",
