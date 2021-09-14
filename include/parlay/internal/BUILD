@@ -115,12 +115,6 @@ cc_library(
 )
 
 cc_library(
-  name = "headered_block",
-  hdrs = ["headered_block.h"],
-  deps = [],
-)
-
-cc_library(
   name = "integer_sort",
   hdrs = ["integer_sort.h"],
   deps = [
