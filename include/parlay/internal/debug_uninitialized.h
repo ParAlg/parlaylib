@@ -1,6 +1,7 @@
 #ifndef PARLAY_INTERNAL_DEBUG_UNINITIALIZED_H_
 #define PARLAY_INTERNAL_DEBUG_UNINITIALIZED_H_
 
+#include <cassert>
 #include <type_traits>
 
 namespace parlay {
