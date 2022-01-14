@@ -19,6 +19,7 @@
 #include <cassert>
 #include <cstddef>
 
+#include <iostream>
 #include <iterator>
 #include <stdexcept>
 #include <string>
