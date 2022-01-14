@@ -76,8 +76,7 @@ struct slice {
   
   // Return the size of the sequence
   size_t size() const { return e - s; }
-
-  // Is empty?
+  
   bool empty() const { return size() == 0; }
   
   bool empty() const { return e == s; }
