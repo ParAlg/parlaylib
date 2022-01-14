@@ -27,7 +27,6 @@ cc_library(
     "//parlay:parallel",
     "//parlay:sequence",
     "//parlay:slice",
-    "//parlay:utilities",
   ],
 )
 
@@ -43,7 +42,14 @@ cc_library(
   name = "collect_reduce",
   hdrs = ["collect_reduce.h"],
   deps = [
+    ":counting_sort",
+    ":sequence_ops",
+    ":integer_sort",
+    ":uninitialized_sequence",
     ":get_time",
+    "//parlay:parallel",
+    "//parlay:sequence",
+    "//parlay:slice",
     "//parlay:utilities",
   ],
 )
@@ -63,6 +69,7 @@ cc_library(
     ":get_time",
     ":sequence_ops",
     ":transpose",
+    ":uninitialized_sequence",
     "//parlay:utilities",
   ],
 )
@@ -95,7 +102,6 @@ cc_library(
     ":collect_reduce",
     ":counting_sort",
     "//parlay:monoid",
-    "//parlay:parallel",
     "//parlay:range",
     "//parlay:sequence",
     "//parlay:slice",
@@ -156,6 +162,7 @@ cc_library(
     ":uninitialized_storage",
     ":uninitialized_sequence",
     ":sequence_ops",
+    ":counting_sort",
     "//parlay:utilities",
   ],
 )

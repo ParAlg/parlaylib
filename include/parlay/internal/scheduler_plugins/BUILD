@@ -1,13 +1,18 @@
 licenses(["notice"])
 
 cc_library(
-  name = "cilk",
-  hdrs = ["cilk.h"],
+  name = "cilkplus",
+  hdrs = ["cilkplus.h"],
 )
 
 cc_library(
   name = "omp",
   hdrs = ["omp.h"],
+)
+
+cc_library(
+  name = "opencilk",
+  hdrs = ["opencilk.h"],
 )
 
 cc_library(

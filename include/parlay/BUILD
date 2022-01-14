@@ -4,6 +4,8 @@ cc_library(
   name = "alloc",
   hdrs = ["alloc.h"],
   deps = [
+      ":parallel",
+      ":utilities",
   "//parlay/internal:concurrent_stack",
   "//parlay/internal:memory_size",
   "//parlay/internal:block_allocator"
@@ -25,7 +27,7 @@ cc_library(
     ":sequence",
     ":slice",
     ":utilities",
-    "//parlay/internal:sequence_ops"
+    ":primitives",
   ],
 )
 
@@ -36,7 +38,6 @@ cc_library(
     ":primitives",
     ":sequence",
     ":slice",
-    "//parlay/internal:file_map"
   ],
 )
 
@@ -50,8 +51,9 @@ cc_library(
   hdrs = ["parallel.h"],
   deps = [
     ":scheduler",
-    "//parlay/internal/scheduler_plugins:cilk",
+    "//parlay/internal/scheduler_plugins:cilkplus",
     "//parlay/internal/scheduler_plugins:omp",
+    "//parlay/internal/scheduler_plugins:opencilk",
     "//parlay/internal/scheduler_plugins:sequential",
   ],
 )
@@ -114,7 +116,6 @@ cc_library(
     ":range",
     ":slice",
     ":type_traits",
-    ":utilities",
     "//parlay/internal:debug_uninitialized",
     "//parlay/internal:sequence_base",
   ],

@@ -1,5 +1,6 @@
 #include <cstddef>
 #include <iterator>
+#include <type_traits>
 
 #include "../sequence.h"
 #include "../utilities.h"
@@ -64,10 +65,6 @@ struct forward_delayed_sequence {
       : begin_(iterator(ii, n)) {}
 };
 
-#if !defined(__GNUC__)
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wunused-local-typedef"
-#endif
 template <typename Seq1, typename Seq2, typename F>
 auto zip_with(Seq1 &S1, Seq2 &S2, F f) {
   struct iter {
@@ -83,9 +80,6 @@ auto zip_with(Seq1 &S1, Seq2 &S2, F f) {
   };
   return forward_delayed_sequence(iter(f, S1.begin(),S2.begin()), S1.end()-S1.begin());
 }
-#if !defined(__GNUC__)
-#pragma clang diagnostic pop
-#endif
 
 template <typename Seq1, typename Seq2>
 auto zip(Seq1 &S1, Seq2 &S2) {
@@ -148,7 +142,8 @@ void apply(const Seq &a, F f) {
 
 template <typename Seq1, typename Seq2, typename F>
 void zip_apply(const Seq1 &s1, const Seq2 &s2, F f) {
-  for (auto i1 = s1.begin(), i2 = s2.begin(); i1 != s1.end(); ++i1, ++i2)
+  auto i1 = s1.begin();
+  for (auto i2 = s2.begin(); i1 != s1.end(); ++i1, ++i2)
     f(*i1,*i2);
 }
 
