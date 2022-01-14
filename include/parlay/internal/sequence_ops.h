@@ -348,8 +348,10 @@ std::pair<size_t, size_t> split_three(slice<InIterator, InIterator> In,
                                       slice<OutIterator, OutIterator> Out,
                                       Char_Seq const &Fl, flags fl = no_flag) {
   size_t n = In.size();
-  if (In == Out)
-    throw std::invalid_argument("In and Out cannot be the same in split_three");
+  if (In == Out) {
+    std::cerr << "In and Out cannot be the same in split_three" << std::endl;
+    std::abort();
+  }
   size_t l = num_blocks(n, _block_size);
   sequence<size_t> Sums0(l);
   sequence<size_t> Sums1(l);

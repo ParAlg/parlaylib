@@ -69,7 +69,7 @@ private:
     }
 
     void* a = (void*) ::operator new(alloc_size, std::align_val_t{large_align});
-    if (a == nullptr) throw std::bad_alloc();
+    if (a == nullptr) std::abort();
 
     large_allocated += n;
     return a;
@@ -121,10 +121,12 @@ public:
 
     for (size_t i = 0; i < num_small; i++) {
       size_t bucket_size = sizes[i];
-      if (bucket_size < 8)
-        throw std::invalid_argument("for small_allocator, bucket sizes must be at least 8");
-      if (!(bucket_size > prev_bucket_size))
-        throw std::invalid_argument("for small_allocator, bucket sizes must increase");
+      if (bucket_size < 8) {
+        std::cerr << "for small_allocator, bucket sizes must be at least 8" << std::endl;
+        std::abort(); }
+      if (!(bucket_size > prev_bucket_size)) {
+        std::cerr << "for small_allocator, bucket sizes must increase" << std::endl;
+        std::abort(); }
       prev_bucket_size = bucket_size;
       new (static_cast<void*>(std::addressof(small_allocators[i])))
       block_allocator(bucket_size, 0, small_alloc_block_size - 64);
@@ -287,8 +289,8 @@ extern inline void p_free(void* ptr) {
   size_t n = *(((size_t*) ptr) - size_offset);
   size_t hsize = header_size(n);
   if (hsize > (1ull << 48)) {
-    std::cout << "corrupted header in my_free" << std::endl;
-    throw std::bad_alloc();
+    std::cerr << "corrupted header in my_free" << std::endl;
+    std::abort();
   }
   internal::get_default_allocator().deallocate((void*) (((char*) ptr) - hsize),
                                                n + hsize);
