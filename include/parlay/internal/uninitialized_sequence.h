@@ -11,7 +11,7 @@
 
 namespace parlay {
 namespace internal {
-  
+
 #ifndef PARLAY_USE_STD_ALLOC
 template<typename T>
 using _uninitialized_sequence_default_allocator = parlay::allocator<T>;
@@ -46,15 +46,15 @@ class uninitialized_sequence {
   using size_type = size_t;
   using pointer = T*;
   using const_pointer = const T*;
-  
+
   using iterator = T*;
   using const_iterator = const T*;
   using reverse_iterator = std::reverse_iterator<iterator>;
   using const_reverse_iterator = std::reverse_iterator<const_iterator>;
 
   using allocator_type = Alloc;
-  
- private: 
+
+ private:
   struct uninitialized_sequence_impl : public allocator_type {
     size_t n;
     value_type* data;
@@ -141,30 +141,30 @@ class uninitialized_sequence {
 
   const_iterator cbegin() const { return impl.data; }
   const_iterator cend() const { return impl.data + impl.n; }
-  
+
   reverse_iterator rbegin() { return std::make_reverse_iterator(end()); }
   reverse_iterator rend() { return std::make_reverse_iterator(begin()); }
-  
+
   const_reverse_iterator rbegin() const { return std::make_reverse_iterator(end()); }
   const_reverse_iterator rend() const { return std::make_reverse_iterator(begin()); }
-  
+
   const_reverse_iterator crbegin() const { return std::make_reverse_iterator(cend()); }
   const_reverse_iterator crend() const { return std::make_reverse_iterator(cbegin()); }
-  
+
   void swap(uninitialized_sequence<T, Alloc>& other) {
     std::swap(impl.n, other.impl.n);
     std::swap(impl.data, other.impl.data);
   }
-  
+
   size_type size() const { return impl.n; }
-  
+
   value_type* data() { return impl.data; }
-  
+
   const value_type* data() const { return impl.data; }
 
   value_type& operator[](size_t i) { return impl.data[i]; }
   const value_type& operator[](size_t i) const { return impl.data[i]; }
-  
+
   value_type& at(size_t i) {
     if (i >= size()) {
       std::cerr << "uninitialized_sequence access out of bounds: length = " <<
@@ -175,20 +175,21 @@ class uninitialized_sequence {
       return impl.data[i];
     }
   }
-  
+
   const value_type& at(size_t i) const {
     if (i >= size()) {
       std::cerr << "uninitialized_sequence access out of bounds: length = " +
                               std::to_string(size()) + ", index = " + std::to_string(i) << std::endl;
       std::abort();
+
     }
     else {
       return impl.data[i];
     }
   }
-};  
-  
-}  // namespace internal  
+};
+
+}  // namespace internal
 }  // namespace parlay
 
 #endif  // PARLAY_INTERNAL_UNINITIALIZED_SEQUENCE_H_
