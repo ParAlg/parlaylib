@@ -1,5 +1,6 @@
 #ifndef PARLAY_INTERNAL_SCHEDULER_PLUGINS_CILKPLUS_H_
 #define PARLAY_INTERNAL_SCHEDULER_PLUGINS_CILKPLUS_H_
+#if defined(PARLAY_CILKPLUS)
 
 #include <cstddef>
 
@@ -39,5 +40,6 @@ inline void parallel_for(size_t start, size_t end, F f,
 
 }  // namespace parlay
 
+#endif
 #endif  // PARLAY_INTERNAL_SCHEDULER_PLUGINS_CILKPLUS_HPP_
 
