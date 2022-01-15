@@ -77,8 +77,6 @@ struct slice {
   // Return the size of the sequence
   size_t size() const { return e - s; }
   
-  bool empty() const { return size() == 0; }
-  
   bool empty() const { return e == s; }
   
   // Return a slice corresponding to the subrange from

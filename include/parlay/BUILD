@@ -52,7 +52,7 @@ cc_library(
     hdrs = ["parallel.h"],
     deps = [
         ":scheduler",
-        "//parlay/internal/scheduler_plugins:cilk",
+        "//parlay/internal/scheduler_plugins:cilkplus",
         "//parlay/internal/scheduler_plugins:omp",
         "//parlay/internal/scheduler_plugins:sequential",
     ],

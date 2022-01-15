@@ -1,8 +1,8 @@
 licenses(["notice"])
 
 cc_library(
-    name = "cilk",
-    hdrs = ["cilk.h"],
+    name = "cilkplus",
+    hdrs = ["cilkplus.h"],
 )
 
 cc_library(

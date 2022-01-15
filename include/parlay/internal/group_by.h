@@ -16,6 +16,8 @@
 #include "block_delayed.h"
 #include "collect_reduce.h"
 #include "counting_sort.h"
+#include "integer_sort.h"
+#include "sample_sort.h"
 
 namespace parlay {
 
@@ -37,16 +39,17 @@ auto group_by_key_sorted(const Range& S, const Comp& less) {
   if constexpr(std::is_integral_v<K> &&
                std::is_unsigned_v<K> &&
                sizeof(KV) <= 16) {
-    sorted = parlay::integer_sort(make_slice(S), [] (KV a) { return a.first; });
+    sorted = internal::integer_sort(make_slice(S), [] (KV a) { return a.first; });
   } else {
     auto pair_less = [&] (auto const &a, auto const &b) {
       return less(a.first, b.first);};
-    sorted = parlay::stable_sort(make_slice(S), pair_less);
+    sorted = internal::sample_sort(make_slice(S), pair_less, true);
   }
 
   auto vals = sequence<V>::uninitialized(n);
 
-  auto idx = block_delayed::filter(iota(n), [&] (size_t i) {
+  auto seq = delayed_seq<size_t>(n, [&](size_t i) { return i; });
+  auto idx = block_delayed::filter(seq, [&] (size_t i) {
     assign_uninitialized(vals[i], sorted[i].second);
     return (i==0) || less(sorted[i-1].first, sorted[i].first);});
 
@@ -248,7 +251,8 @@ auto remove_duplicate_integers(R const &A, Integer_t max_value) {
       d = true;}
   };
   auto flags = internal::collect_reduce(A, helper(), max_value);
-  return pack(iota<Integer_t>(max_value), flags);
+  auto seq = delayed_seq<size_t>(max_value, [&](size_t i) { return i; });
+  return pack(seq, flags);
 }
 
 template <typename Integer_t, PARLAY_RANGE_TYPE R>
