@@ -139,6 +139,7 @@ cc_library(
   name = "merge",
   hdrs = ["merge.h"],
   deps = [
+    ":binary_search",
     "//parlay:sequence",
     "//parlay:utilities",
   ],
@@ -215,6 +216,7 @@ cc_library(
   name = "transpose",
   hdrs = ["transpose.h"],
   deps = [
+    "//parlay:sequence",
     "//parlay:utilities",
   ],
 )
@@ -224,6 +226,7 @@ cc_library(
   hdrs = ["uninitialized_sequence.h"],
   deps = [
     ":debug_uninitialized",
+    "//parlay:alloc",
   ],
 )
 

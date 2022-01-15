@@ -2,6 +2,7 @@
 #ifndef PARLAY_TRANSPOSE_H_
 #define PARLAY_TRANSPOSE_H_
 
+#include "../sequence.h"
 #include "../utilities.h"
 
 namespace parlay {

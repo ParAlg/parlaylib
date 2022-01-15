@@ -1,6 +1,7 @@
 
 #ifndef PARLAY_INTERNAL_POSIX_FILE_MAP_IMPL_POSIX
 #define PARLAY_INTERNAL_POSIX_FILE_MAP_IMPL_POSIX
+#if defined(PARLAY_POSIX_FILE_MAP) && !defined(PARLAY_USE_FALLBACK_FILE_MAP)
 
 #include <cassert>
 
@@ -95,4 +96,5 @@ class file_map {
 
 }  // namespace parlay
 
+#endif
 #endif  // PARLAY_INTERNAL_POSIX_FILE_MAP_IMPL_POSIX
