@@ -38,6 +38,7 @@ cc_library(
     ":primitives",
     ":sequence",
     ":slice",
+    "//parlay/internal:file_map"
   ],
 )
 
