@@ -40,3 +40,4 @@ inline void parallel_for(size_t start, size_t end, F f,
 
 #endif
 #endif  // PARLAY_INTERNAL_SCHEDULER_PLUGINS_CILK_HPP_
+
