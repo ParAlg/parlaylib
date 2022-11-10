@@ -20,6 +20,7 @@
 #include <utility>
 
 #include "../parallel.h"
+#include "../portability.h"
 #include "../type_traits.h"      // IWYU pragma: keep  // for is_trivially_relocatable
 #include "../utilities.h"
 
@@ -37,7 +38,7 @@ namespace sequence_internal {
 //  Allocator = An allocator for elements of type T
 //  EnableSSO = True to enable small-size optimization
 template<typename T, typename Allocator, bool EnableSSO>
-struct sequence_base {
+struct alignas(uint64_t) sequence_base {
 
   // Only use SSO for trivial types
   constexpr static bool use_sso = EnableSSO && std::is_trivial<T>::value;
@@ -340,11 +341,7 @@ struct sequence_base {
       }
 
       header* buffer;
-    }
-#if defined(__GNUC__)
-    __attribute__((packed))
-#endif
-    ;
+    } PARLAY_PACKED;
 
     // A not-short-size-optimized sequence. Elements are
     // stored in a heap-allocated buffer. We use a 48-bit
@@ -371,11 +368,8 @@ struct sequence_base {
       value_type* data() { return buffer.data(); }
 
       const value_type* data() const { return buffer.data(); }
-    }
-#if defined(__GNUC__)
-    __attribute__((packed))
-#endif
-    ;
+    } PARLAY_PACKED;
+
 
     // The maximum capacity of a short-size-optimized sequence
     constexpr static size_t short_capacity = (sizeof(capacitated_buffer) + sizeof(uint64_t) - 1) / sizeof(value_type);
@@ -411,11 +405,7 @@ struct sequence_base {
       union {
         typename std::conditional<use_sso, short_seq, void*>::type short_mode;
         long_seq long_mode;
-      }
-#if defined(__GNUC__)
-      __attribute__((packed))
-#endif
-      ;
+      } PARLAY_PACKED;
 
       uint8_t small_n : 7;
       uint8_t flag : 1;
@@ -482,11 +472,22 @@ struct sequence_base {
       }
     }
 
-    // Constructs am object of type value_type at an
+    // Constructs an object of type value_type at an
     // uninitialized memory location p using args...
     template<typename... Args>
     void initialize(value_type* p, Args&&... args) {
       std::allocator_traits<T_allocator_type>::construct(*this, p, std::forward<Args>(args)...);
+    }
+
+    // Constructs an object of type value_type at an uninitialized
+    // memory location p using f() by copy elision. This circumvents
+    // the allocator and hence should only be used when initialize
+    // and initialize_explicit are not applicable (e.g., for a type
+    // that is not copyable or movable).
+    template<typename F>
+    void initialize_with_copy_elision(value_type* p, F&& f) {
+      static_assert(std::is_same_v<value_type, std::invoke_result_t<F&&>>);
+      new (p) value_type(f());
     }
 
     // Perform a copy or move initialization. This is equivalent
@@ -512,7 +513,7 @@ struct sequence_base {
 
     const value_type& at(size_t i) const { return data()[i]; }
 
-    // Should only be called during intitialization. Same as
+    // Should only be called during initialization. Same as
     // ensure_capacity, except does not need to copy elements
     // from the existing buffer.
     void initialize_capacity(size_t desired) {
@@ -542,7 +543,7 @@ struct sequence_base {
       if (current < desired) {
         // Allocate a new buffer that is at least
         // 50% larger than the old capacity
-        size_t new_capacity = (std::max)(desired, (15 * current + 9) / 10);
+        size_t new_capacity = (std::max)(desired, (5 * current)/ 2);//(15 * current + 9) / 10);
         auto alloc = get_raw_allocator();
         capacitated_buffer new_buffer(new_capacity, alloc);
 

@@ -4,11 +4,11 @@ cc_library(
     name = "alloc",
     hdrs = ["alloc.h"],
     deps = [
-        ":parallel",
+        ":type_traits",
         ":utilities",
         "//parlay/internal:block_allocator",
-        "//parlay/internal:concurrent_stack",
         "//parlay/internal:memory_size",
+        "//parlay/internal:pool_allocator",
     ],
 )
 
@@ -56,6 +56,11 @@ cc_library(
         "//parlay/internal/scheduler_plugins:omp",
         "//parlay/internal/scheduler_plugins:sequential",
     ],
+)
+
+cc_library(
+    name = "portability",
+    hdrs = ["portability.h"],
 )
 
 cc_library(

@@ -9,9 +9,10 @@ cc_library(
     name = "block_allocator",
     hdrs = ["block_allocator.h"],
     deps = [
-        ":concurrent_stack",
         ":memory_size",
         "//parlay:utilities",
+        "//parlay:parallel",
+        "//parlay/internal/concurrency:hazptr_stack",
     ],
 )
 
@@ -59,21 +60,15 @@ cc_library(
 )
 
 cc_library(
-    name = "concurrent_stack",
-    hdrs = ["concurrent_stack.h"],
-    deps = [
-        "//parlay:utilities",
-    ],
-)
-
-cc_library(
     name = "counting_sort",
     hdrs = ["counting_sort.h"],
     deps = [
-        ":get_time",
         ":sequence_ops",
-        ":transpose",
         ":uninitialized_sequence",
+        "//parlay:monoid",
+        "//parlay:parallel",
+        "//parlay:sequence",
+        "//parlay:slice",
         "//parlay:utilities",
     ],
 )
@@ -105,11 +100,23 @@ cc_library(
         ":block_delayed",
         ":collect_reduce",
         ":counting_sort",
+        ":integer_sort",
+        ":sample_sort",
+        ":sequence_ops",
         "//parlay:monoid",
         "//parlay:primitives",
         "//parlay:range",
         "//parlay:sequence",
         "//parlay:slice",
+        "//parlay:utilities",
+    ],
+)
+
+cc_library(
+    name = "heap_tree",
+    hdrs = ["heap_tree.h"],
+    deps = [
+        "//parlay:sequence",
         "//parlay:utilities",
     ],
 )
@@ -151,8 +158,16 @@ cc_library(
         ":merge",
         ":quicksort",
         ":uninitialized_sequence",
-        "//parlay:sequence",
         "//parlay:utilities",
+    ],
+)
+
+cc_library(
+    name = "pool_allocator",
+    hdrs = ["pool_allocator.h"],
+    deps = [
+        ":block_allocator",
+        "//parlay/internal/concurrency:hazptr_stack",
     ],
 )
 
@@ -185,6 +200,22 @@ cc_library(
     hdrs = ["sequence_base.h"],
     deps = [
         "//parlay:parallel",
+        "//parlay:portability",
+        "//parlay:type_traits",
+        "//parlay:utilities",
+    ],
+)
+
+cc_library(
+    name = "sequence_impl",
+    hdrs = ["sequence_impl.h"],
+    deps = [
+        ":sequence_base",
+        ":debug_uninitialized",
+        "//parlay:alloc",
+        "//parlay:parallel",
+        "//parlay:range",
+        "//parlay:slice",
         "//parlay:type_traits",
         "//parlay:utilities",
     ],
@@ -196,8 +227,10 @@ cc_library(
     deps = [
         "//parlay:delayed_sequence",
         "//parlay:monoid",
+        "//parlay:parallel",
         "//parlay:range",
         "//parlay:sequence",
+        "//parlay:slice",
         "//parlay:utilities",
     ],
 )
@@ -216,8 +249,11 @@ cc_library(
     name = "transpose",
     hdrs = ["transpose.h"],
     deps = [
+        ":sequence_ops",
         "//parlay:monoid",
+        "//parlay:parallel",
         "//parlay:sequence",
+        "//parlay:slice",
         "//parlay:utilities",
     ],
 )

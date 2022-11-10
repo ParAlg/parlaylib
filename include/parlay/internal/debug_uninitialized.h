@@ -72,8 +72,12 @@ struct UninitializedTracker {
 
   void swap(UninitializedTracker& other) {
     assert(initialized && "Trying to swap uninitialized object!");
-    assert(other.initialized && "Trying to swap with uninitialize object!");
+    assert(other.initialized && "Trying to swap with an uninitialized object!");
     std::swap(x, other.x);
+  }
+
+  friend void swap(parlay::internal::UninitializedTracker& a, parlay::internal::UninitializedTracker& b) {
+    a.swap(b);
   }
 
   int x;
@@ -83,12 +87,6 @@ struct UninitializedTracker {
 }  // namespace internal
 }  // namespace parlay
 
-namespace std {
-  // Specialize the swap function for UninitializedTracker
-  inline void swap(parlay::internal::UninitializedTracker& a, parlay::internal::UninitializedTracker& b) {
-    a.swap(b);
-  }
-}
 
 // Macros for testing initialized/uninitializedness
 
