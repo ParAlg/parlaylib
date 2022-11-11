@@ -13,6 +13,24 @@ cc_library(
 )
 
 cc_library(
+    name = "delayed",
+    hdrs = ["delayed.h"],
+    deps = [
+        ":delayed_sequence",
+        ":range",
+        ":type_traits",
+        "//parlay/internal/delayed:filter",
+        "//parlay/internal/delayed:filter_op",
+        "//parlay/internal/delayed:flatten",
+        "//parlay/internal/delayed:map",
+        "//parlay/internal/delayed:scan",
+        "//parlay/internal/delayed:terminal",
+        "//parlay/internal/delayed:zip",
+        "//parlay/internal:sequence_ops",
+    ],
+)
+
+cc_library(
     name = "delayed_sequence",
     hdrs = ["delayed_sequence.h"],
 )
