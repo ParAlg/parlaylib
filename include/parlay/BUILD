@@ -119,6 +119,9 @@ cc_library(
 cc_library(
     name = "range",
     hdrs = ["range.h"],
+    deps = [
+        ":type_traits",
+    ]
 )
 
 cc_library(
