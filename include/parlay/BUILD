@@ -33,6 +33,9 @@ cc_library(
 cc_library(
     name = "delayed_sequence",
     hdrs = ["delayed_sequence.h"],
+    deps = [
+        ":utilities",
+    ],
 )
 
 cc_library(
