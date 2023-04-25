@@ -63,6 +63,10 @@ cc_library(
 cc_library(
     name = "monoid",
     hdrs = ["monoid.h"],
+    deps = [
+        ":portability",
+        ":type_traits",
+    ]
 )
 
 cc_library(
