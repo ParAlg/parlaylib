@@ -215,21 +215,6 @@ cc_library(
 )
 
 cc_library(
-    name = "sequence_impl",
-    hdrs = ["sequence_impl.h"],
-    deps = [
-        ":sequence_base",
-        ":debug_uninitialized",
-        "//parlay:alloc",
-        "//parlay:parallel",
-        "//parlay:range",
-        "//parlay:slice",
-        "//parlay:type_traits",
-        "//parlay:utilities",
-    ],
-)
-
-cc_library(
     name = "sequence_ops",
     hdrs = ["sequence_ops.h"],
     deps = [
