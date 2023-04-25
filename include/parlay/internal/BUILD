@@ -91,7 +91,6 @@ cc_library(
     hdrs = ["file_map.h"],
     deps = [
         "//parlay/internal/posix:file_map_impl_posix",
-        "//parlay/internal/windows:file_map_impl_windows",
     ],
 )
 
