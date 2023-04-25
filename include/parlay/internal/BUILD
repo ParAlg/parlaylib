@@ -1,6 +1,14 @@
 licenses(["notice"])
 
 cc_library(
+    name = "atomic_wait",
+    hdrs = ["atomic_wait.h"],
+    deps = [
+        "//parlay:type_traits",
+    ],
+)
+
+cc_library(
     name = "binary_search",
     hdrs = ["binary_search.h"],
 )
@@ -273,6 +281,11 @@ cc_library(
     deps = [
         ":debug_uninitialized",
     ],
+)
+
+cc_library(
+    name = "work_stealing_deque",
+    hdrs = ["work_stealing_deque.h"],
 )
 
 cc_library(

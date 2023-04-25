@@ -125,6 +125,8 @@ cc_library(
     name = "scheduler",
     hdrs = ["scheduler.h"],
     deps = [
+        "//parlay/internal:atomic_wait",
+        "//parlay/internal:work_stealing_deque",
         "//parlay/internal:work_stealing_job",
     ],
 )
