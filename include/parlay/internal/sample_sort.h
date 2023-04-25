@@ -8,6 +8,7 @@
 #ifndef PARLAY_SAMPLE_SORT_H_
 #define PARLAY_SAMPLE_SORT_H_
 
+#include <cassert>
 #include <cmath>
 #include <cstdio>
 #include <cstring>

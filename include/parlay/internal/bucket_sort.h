@@ -2,6 +2,8 @@
 #ifndef PARLAY_BUCKET_SORT_H_
 #define PARLAY_BUCKET_SORT_H_
 
+#include <cassert>
+
 #include "merge_sort.h"
 #include "quicksort.h"
 #include "sequence_ops.h"

@@ -2,6 +2,7 @@
 #ifndef PARLAY_INTEGER_SORT_H_
 #define PARLAY_INTEGER_SORT_H_
 
+#include <cassert>
 #include <cmath>
 #include <cstdint>
 #include <cstdio>
