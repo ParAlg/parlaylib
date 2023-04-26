@@ -2,6 +2,7 @@
 #define PARLAY_INTERNAL_SCHEDULER_PLUGINS_SEQUENTIAL_H_
 
 #include <cstddef>
+#include <utility>
 
 namespace parlay {
 

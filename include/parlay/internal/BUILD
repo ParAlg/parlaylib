@@ -111,7 +111,7 @@ cc_library(
         ":sample_sort",
         ":sequence_ops",
         "//parlay:monoid",
-        "//parlay:primitives",
+        "//parlay:parallel",
         "//parlay:range",
         "//parlay:sequence",
         "//parlay:slice",
@@ -175,6 +175,8 @@ cc_library(
     deps = [
         ":block_allocator",
         "//parlay/internal/concurrency:hazptr_stack",
+        "//parlay:parallel",
+        "//parlay:utilities",
     ],
 )
 
@@ -275,6 +277,9 @@ cc_library(
 cc_library(
     name = "work_stealing_job",
     hdrs = ["work_stealing_job.h"],
+    deps = [
+        ":atomic_wait",
+    ],
 )
 
 package(
