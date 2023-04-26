@@ -19,7 +19,7 @@ struct WorkStealingJob {
   WorkStealingJob() {
     done.store(false, std::memory_order_relaxed);
   }
-  ~WorkStealingJob() = default;
+  virtual ~WorkStealingJob() = default;
   void operator()() {
     assert(done.load(std::memory_order_relaxed) == false);
     execute();
