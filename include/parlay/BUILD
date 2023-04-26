@@ -91,6 +91,7 @@ cc_library(
     name = "primitives",
     hdrs = ["primitives.h"],
     deps = [
+        ":delayed",
         ":delayed_sequence",
         ":monoid",
         ":parallel",
