@@ -173,8 +173,9 @@ class sequence : protected sequence_internal::sequence_base<T, Allocator, Enable
 
   value_type& at(size_t i) {
     if (i >= size()) {
-      throw std::out_of_range("sequence access out of bounds: length = " + std::to_string(size()) +
-                              ", index = " + std::to_string(i));
+      std::cerr << "sequence access out of bounds: length = " + std::to_string(size()) +
+                              ", index = " + std::to_string(i) << std::endl;
+      exit(-1);
     } else {
       return storage.at(i);
     }
@@ -182,8 +183,9 @@ class sequence : protected sequence_internal::sequence_base<T, Allocator, Enable
 
   const value_type& at(size_t i) const {
     if (i >= size()) {
-      throw std::out_of_range("sequence access out of bounds: length = " + std::to_string(size()) +
-                              ", index = " + std::to_string(i));
+      std::cerr << std::out_of_range("sequence access out of bounds: length = " + std::to_string(size()) +
+                              ", index = " + std::to_string(i)) << std::endl;
+      exit(-1);
     } else {
       return storage.at(i);
     }

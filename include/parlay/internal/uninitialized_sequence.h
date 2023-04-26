@@ -167,8 +167,9 @@ class uninitialized_sequence {
   
   value_type& at(size_t i) {
     if (i >= size()) {
-      throw std::out_of_range("uninitialized_sequence access out of bounds: length = " +
-                              std::to_string(size()) + ", index = " + std::to_string(i));
+      std::cerr << std::out_of_range("uninitialized_sequence access out of bounds: length = " +
+                              std::to_string(size()) + ", index = " + std::to_string(i)) << std::endl:
+      exit(-1);
     }
     else {
       return impl.data[i];
@@ -177,8 +178,9 @@ class uninitialized_sequence {
   
   const value_type& at(size_t i) const {
     if (i >= size()) {
-      throw std::out_of_range("uninitialized_sequence access out of bounds: length = " +
-                              std::to_string(size()) + ", index = " + std::to_string(i));
+      std::cerr << std::out_of_range("uninitialized_sequence access out of bounds: length = " +
+                              std::to_string(size()) + ", index = " + std::to_string(i)) << std::endl;
+      exit(-1);
     }
     else {
       return impl.data[i];

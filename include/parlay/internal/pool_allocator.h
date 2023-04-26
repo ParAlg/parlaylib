@@ -76,7 +76,9 @@ struct pool_allocator {
     }
 
     void* a = ::operator new(alloc_size, std::align_val_t{max_alignment});
-    if (a == nullptr) throw std::bad_alloc();
+    if (a == nullptr) {
+      std::cerr << "a == nullptr" << std::endl; exit(-1);
+    }
 
     large_allocated += n;
     return a;
