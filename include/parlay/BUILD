@@ -1,5 +1,9 @@
 licenses(["notice"])
 
+package(
+    default_visibility = ["//visibility:public"],
+)
+
 cc_library(
     name = "alloc",
     hdrs = ["alloc.h"],
@@ -184,8 +188,4 @@ cc_library(
         ":type_traits",
         "//parlay/internal:debug_uninitialized",
     ],
-)
-
-package(
-    default_visibility = ["//visibility:public"],
 )

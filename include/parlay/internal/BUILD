@@ -1,5 +1,9 @@
 licenses(["notice"])
 
+package(
+    default_visibility = ["//visibility:public"],
+)
+
 cc_library(
     name = "atomic_wait",
     hdrs = ["atomic_wait.h"],
@@ -280,8 +284,4 @@ cc_library(
     deps = [
         ":atomic_wait",
     ],
-)
-
-package(
-    default_visibility = ["//visibility:public"],
 )

@@ -1,5 +1,9 @@
 licenses(["notice"])
 
+package(
+    default_visibility = ["//visibility:public"],
+)
+
 cc_library(
     name = "common",
     hdrs = ["common.h"],
@@ -106,8 +110,4 @@ cc_library(
         "//parlay:type_traits",
         "//parlay/internal:sequence_ops",
     ],
-)
-
-package(
-    default_visibility = ["//visibility:public"],
 )

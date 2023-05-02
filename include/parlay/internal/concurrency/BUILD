@@ -1,5 +1,9 @@
 licenses(["notice"])
 
+package(
+    default_visibility = ["//visibility:public"],
+)
+
 cc_library(
     name = "acquire_retire",
     hdrs = ["acquire_retire.h"],
@@ -16,8 +20,4 @@ cc_library(
     deps = [
         ":acquire_retire",
     ],
-)
-
-package(
-    default_visibility = ["//visibility:public"],
 )
