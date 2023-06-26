@@ -41,16 +41,9 @@
 
 namespace parlay {
 
-// If the macro PARLAY_USE_STD_ALLOC is defined, sequences will default
-// to using std::allocator instead of parlay::allocator.
 namespace internal {
-#ifndef PARLAY_USE_STD_ALLOC
-template<typename T>
-using sequence_default_allocator = parlay::allocator<T>;
-#else
 template<typename T>
 using sequence_default_allocator = std::allocator<T>;
-#endif
 }  // namespace internal
 
 

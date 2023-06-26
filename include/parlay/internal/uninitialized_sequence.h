@@ -11,14 +11,9 @@
 
 namespace parlay {
 namespace internal {
-  
-#ifndef PARLAY_USE_STD_ALLOC
-template<typename T>
-using _uninitialized_sequence_default_allocator = parlay::allocator<T>;
-#else
+
 template<typename T>
 using _uninitialized_sequence_default_allocator = std::allocator<T>;
-#endif
 
 // An uninitialized fixed-size sequence container.
 //

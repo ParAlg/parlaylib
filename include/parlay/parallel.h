@@ -105,58 +105,24 @@ inline void blocked_for(size_t start, size_t end, size_t block_size, F&& f, bool
 #include "scheduler.h"
 
 namespace parlay {
-  
-namespace internal {
-
-#ifdef _MSC_VER
-#pragma warning(push)
-#pragma warning(disable : 4996)  // 'getenv': This function or variable may be unsafe.
-#endif
-
-// Determine the number of workers to spawn
-inline unsigned int init_num_workers() {
-  if (const auto env_p = std::getenv("PARLAY_NUM_THREADS")) {
-    return std::stoi(env_p);
-  } else {
-    return std::thread::hardware_concurrency();
-  }
-}
-
-#ifdef _MSC_VER
-#pragma warning(pop)
-#endif
-
-// Use a "Meyer singleton" to provide thread-safe 
-// initialisation and destruction of the scheduler
-//
-// The declaration of get_default_scheduler must be 
-// extern inline to ensure that there is only ever one 
-// copy of the scheduler. This is guaranteed by the C++
-// standard: 7.1.2/4 A static local variable in an
-// extern inline function always refers to the same
-// object.
-extern inline fork_join_scheduler& get_default_scheduler() {
-  static fork_join_scheduler fj(init_num_workers());
-  return fj;
-}
-
-}  // namespace internal
 
 inline size_t num_workers() {
-  return internal::get_default_scheduler().num_workers();
+  assert(IsSchedulerInitialized());
+  return GetScheduler()->num_workers();
 }
 
 inline size_t worker_id() {
-  return internal::get_default_scheduler().worker_id();
+  assert(IsSchedulerInitialized());
+  return GetScheduler()->worker_id();
 }
 
-template <typename F>
-inline void parallel_for(size_t start, size_t end, F&& f, long granularity, bool conservative) {
+template <class F>
+inline void parallel_for(size_t start, size_t end, F&& f, long granularity,
+                         bool conservative) {
   static_assert(std::is_invocable_v<F&, size_t>);
   // Note: scheduler::parfor copies the function object, so we wrap it in
   // a lambda here in case F is expensive to copy or not copyable at all
   auto loop_body = [&](size_t i) { f(i); };
-
   if (start + 1 == end) {
     f(start);
   }
@@ -164,8 +130,7 @@ inline void parallel_for(size_t start, size_t end, F&& f, long granularity, bool
     for (size_t i = start; i < end; i++) loop_body(i);
   }
   else if (end > start) {
-    internal::get_default_scheduler().parfor(start, end,
-     loop_body, static_cast<size_t>(granularity), conservative);
+    GetScheduler()->parfor(start, end, loop_body, static_cast<size_t>(granularity), conservative);
   }
 }
 
@@ -173,7 +138,7 @@ template <typename Lf, typename Rf>
 inline void par_do(Lf&& left, Rf&& right, bool conservative) {
   static_assert(std::is_invocable_v<Lf&&>);
   static_assert(std::is_invocable_v<Rf&&>);
-  return internal::get_default_scheduler().pardo(std::forward<Lf>(left), std::forward<Rf>(right), conservative);
+  return GetScheduler()->pardo(std::forward<Lf>(left), std::forward<Rf>(right), conservative);
 }
 
 }  // namespace parlay
