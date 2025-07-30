@@ -101,6 +101,7 @@ cc_library(
         ":parallel",
         ":random",
         ":range",
+        ":relocation",
         ":sequence",
         ":slice",
         ":type_traits",
@@ -168,6 +169,7 @@ cc_library(
     deps = [
         ":alloc",
         ":parallel",
+        ":portability",
         ":range",
         ":slice",
         ":type_traits",
